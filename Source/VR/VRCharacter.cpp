@@ -5,6 +5,12 @@
 #include "VMotionControllerComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "InputMappingContext.h"
+#include "GameFramework/PlayerController.h"
+#include "Engine/LocalPlayer.h"
+#include "EnhancedInputComponent.h"
+
 // Sets default values
 AVRCharacter::AVRCharacter()
 {
@@ -46,6 +52,32 @@ void AVRCharacter::Tick(float DeltaTime)
 void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	APlayerController* PlayerController = GetController<APlayerController>();
+	if (PlayerController)
+	{
+		UEnhancedInputLocalPlayerSubsystem* InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+		if (InputSubsystem)
+		{
+			InputSubsystem->RemoveMappingContext(InputMappingContext);
+			InputSubsystem->AddMappingContext(InputMappingContext, 0);
+		}
+	}
+	
+	UEnhancedInputComponent* EnhancedInputComp = Cast<UEnhancedInputComponent>(InputComponent);
+	if (EnhancedInputComp)
+	{
+		EnhancedInputComp->BindAction(MoveInputAction, ETriggerEvent::Triggered, this, &AVRCharacter::Move);
+		EnhancedInputComp->BindAction(TurnInputAction, ETriggerEvent::Triggered, this, &AVRCharacter::Turn);
+	}
+}
+
+void AVRCharacter::Move(const FInputActionValue& InputActionVal)
+{	
+
+}
+
+void AVRCharacter::Turn(const FInputActionValue& InputActionVal)
+{
 
 }
 

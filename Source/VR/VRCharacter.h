@@ -26,6 +26,20 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
+	void Move(const FInputActionValue& InputActionVal);
+
+	void Turn(const FInputActionValue& InputActionVal);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputMappingContext* InputMappingContext;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* MoveInputAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* TurnInputAction;
+
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
 	class UCameraComponent* ViewCam;
 
