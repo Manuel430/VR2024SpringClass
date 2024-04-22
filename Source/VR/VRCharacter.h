@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "InputActionValue.h"
 #include "VRCharacter.generated.h"
 
 UCLASS()
@@ -29,6 +30,9 @@ private:
 	void Move(const FInputActionValue& InputActionVal);
 
 	void Turn(const FInputActionValue& InputActionVal);
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	float TurnSpeed = 5.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputMappingContext* InputMappingContext;
@@ -38,7 +42,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* TurnInputAction;
-
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
 	class UCameraComponent* ViewCam;

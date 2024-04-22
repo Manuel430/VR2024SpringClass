@@ -73,11 +73,20 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 void AVRCharacter::Move(const FInputActionValue& InputActionVal)
 {	
+	FVector2D MoveInput = InputActionVal.Get<FVector2D>();
+	MoveInput.Normalize();
 
+	FVector Fwd = ViewCam->GetForwardVector();
+	Fwd.Z = 0;
+	Fwd.Normalize();
+
+	FVector Right = FVector::CrossProduct(FVector::UpVector, Fwd);
+	AddMovementInput(MoveInput.Y * Fwd + MoveInput.X * Right);
 }
 
 void AVRCharacter::Turn(const FInputActionValue& InputActionVal)
 {
-
+	float TurnAmt = InputActionVal.Get<float>();
+	AddControllerYawInput(TurnAmt * TurnSpeed);
 }
 
