@@ -3,6 +3,7 @@
 
 #include "VRCharacter.h"
 #include "VMotionControllerComponent.h"
+#include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 // Sets default values
 AVRCharacter::AVRCharacter()
@@ -18,7 +19,13 @@ AVRCharacter::AVRCharacter()
 	LeftHandControllerComp->SetTrackingMotionSource("Left");
 
 	RightHandMesh = CreateDefaultSubobject<USkeletalMeshComponent>("RightHandMesh");
-	RightHandMesh->SetupAttachment(GetRootComponent());
+	RightHandMesh->SetupAttachment(RightHandControllerComp);
+
+	LeftHandMesh = CreateDefaultSubobject<USkeletalMeshComponent>("LeftHandMesh");
+	LeftHandMesh->SetupAttachment(LeftHandControllerComp);
+
+	ViewCam = CreateDefaultSubobject<UCameraComponent>("ViewCam");
+	ViewCam->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned

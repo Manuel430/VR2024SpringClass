@@ -26,6 +26,9 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 private:
+	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
+	class UCameraComponent* ViewCam;
+
 	UPROPERTY(VisibleDefaultsOnly, Category = "VR")
 	class UVMotionControllerComponent* LeftHandControllerComp;
 
