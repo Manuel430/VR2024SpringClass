@@ -60,6 +60,12 @@ private:
 	class UVMotionControllerComponent* RightHandControllerComp;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "VR")
+	class UVMotionControllerComponent* LeftAimControllerComp;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "VR")
+	class UVMotionControllerComponent* RightAimControllerComp;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "VR")
 	class USkeletalMeshComponent* RightHandMesh;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "VR")

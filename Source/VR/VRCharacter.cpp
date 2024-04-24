@@ -32,6 +32,14 @@ AVRCharacter::AVRCharacter()
 
 	ViewCam = CreateDefaultSubobject<UCameraComponent>("ViewCam");
 	ViewCam->SetupAttachment(GetRootComponent());
+
+	LeftAimControllerComp = CreateDefaultSubobject<UVMotionControllerComponent>("LeftAimControllerComp");
+	LeftAimControllerComp->SetTrackingMotionSource("LeftAim");
+	LeftAimControllerComp->SetupAttachment(GetRootComponent());
+
+	RightAimControllerComp = CreateDefaultSubobject<UVMotionControllerComponent>("RightAimControllerComp");
+	RightAimControllerComp->SetTrackingMotionSource("RightAim");
+	RightAimControllerComp->SetupAttachment(GetRootComponent());
 }
 
 // Called when the game starts or when spawned
@@ -71,7 +79,6 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 		EnhancedInputComp->BindAction(TeleportAction, ETriggerEvent::Started, this, &AVRCharacter::StartTeleport);
 		EnhancedInputComp->BindAction(TeleportAction, ETriggerEvent::Ongoing, this, &AVRCharacter::TeleportTargetting);
 		EnhancedInputComp->BindAction(TeleportAction, ETriggerEvent::Triggered, this, &AVRCharacter::CommitTeleport);
-
 	}
 }
 
@@ -101,7 +108,7 @@ void AVRCharacter::StartTeleport()
 
 void AVRCharacter::TeleportTargetting()
 {
-	PrintMsgOnScreen("Targetting");
+	RightAimControllerComp->DoTracing();
 }
 
 void AVRCharacter::CommitTeleport()
