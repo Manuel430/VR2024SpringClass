@@ -113,7 +113,11 @@ void AVRCharacter::TeleportTargetting()
 
 void AVRCharacter::CommitTeleport()
 {
-	PrintMsgOnScreen("Commit");
+	FHitResult TraceHitResult =  RightAimControllerComp->StopGetTracingResult();
+	if (TraceHitResult.bBlockingHit)
+	{
+		SetActorLocation(TraceHitResult.ImpactPoint);
+	}
 }
 
 void AVRCharacter::PrintMsgOnScreen(const FString& Msg)

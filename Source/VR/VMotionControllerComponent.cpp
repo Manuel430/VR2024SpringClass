@@ -3,6 +3,8 @@
 
 #include "VMotionControllerComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NavigationSystem.h"
+
 void UVMotionControllerComponent::StartTracing()
 {
 }
@@ -20,9 +22,22 @@ void UVMotionControllerComponent::DoTracing()
 	PathParams.ProjectileRadius = TraceProjectileRadius;
 
 	UGameplayStatics::PredictProjectilePath(this, PathParams, TraceResult);
+
+	if (TraceResult.HitResult.bBlockingHit)
+	{
+		FNavLocation ProjectedNavMeshLocation;
+		if (UNavigationSystemV1::GetNavigationSystem(this)->ProjectPointToNavigation(TraceResult.HitResult.ImpactPoint, ProjectedNavMeshLocation))
+		{
+			TraceResult.HitResult.ImpactPoint = FVector(ProjectedNavMeshLocation);
+		}
+		else
+		{
+			TraceResult.HitResult.bBlockingHit = false;
+		}
+	}
 }
 
 FHitResult UVMotionControllerComponent::StopGetTracingResult() const
 {
-	return FHitResult();
+	return TraceResult.HitResult;
 }
