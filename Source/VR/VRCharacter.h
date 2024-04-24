@@ -31,6 +31,10 @@ private:
 
 	void Turn(const FInputActionValue& InputActionVal);
 	
+	void StartTeleport();
+	void TeleportTargeting();
+	void CommitTeleport();
+
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	float TurnSpeed = 5.f;
 
@@ -42,6 +46,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Input")
 	class UInputAction* TurnInputAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Input")
+	class UInputAction* TeleportInputAction;
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "Camera")
 	class UCameraComponent* ViewCam;
@@ -57,4 +64,6 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly, Category = "VR")
 	class USkeletalMeshComponent* LeftHandMesh;
+
+	void PrintMsgOnScreen(const FString& Msg);
 };

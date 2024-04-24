@@ -68,6 +68,10 @@ void AVRCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	{
 		EnhancedInputComp->BindAction(MoveInputAction, ETriggerEvent::Triggered, this, &AVRCharacter::Move);
 		EnhancedInputComp->BindAction(TurnInputAction, ETriggerEvent::Triggered, this, &AVRCharacter::Turn);
+
+		EnhancedInputComp->BindAction(TeleportInputAction, ETriggerEvent::Started, this, &AVRCharacter::StartTeleport);
+		EnhancedInputComp->BindAction(TeleportInputAction, ETriggerEvent::Ongoing, this, &AVRCharacter::TeleportTargeting);
+		EnhancedInputComp->BindAction(TeleportInputAction, ETriggerEvent::Triggered, this, &AVRCharacter::CommitTeleport);
 	}
 }
 
@@ -88,5 +92,28 @@ void AVRCharacter::Turn(const FInputActionValue& InputActionVal)
 {
 	float TurnAmt = InputActionVal.Get<float>();
 	AddControllerYawInput(TurnAmt * TurnSpeed);
+}
+
+void AVRCharacter::StartTeleport()
+{
+	PrintMsgOnScreen("Start");
+}
+
+void AVRCharacter::TeleportTargeting()
+{
+	PrintMsgOnScreen("Targeting");
+}
+
+void AVRCharacter::CommitTeleport()
+{
+	PrintMsgOnScreen("Commit");
+}
+
+void AVRCharacter::PrintMsgOnScreen(const FString& Msg)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(INDEX_NONE, 3,FColor::Red, Msg);
+	}
 }
 

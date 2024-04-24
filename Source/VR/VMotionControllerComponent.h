@@ -14,4 +14,5 @@ class VR_API UVMotionControllerComponent : public UMotionControllerComponent
 {
 	GENERATED_BODY()
 	
+
 };
