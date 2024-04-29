@@ -3,6 +3,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "NiagaraSystem.h"
 #include "NiagaraComponent.h"
+#include "NiagaraDataInterfaceArrayFunctionLibrary.h"
 #include "NavigationSystem.h"
 
 void UVMotionControllerComponent::StartTracing()
@@ -35,6 +36,12 @@ void UVMotionControllerComponent::DoTracing()
 			TraceResult.HitResult.bBlockingHit = false;
 		}
 	}
+	TArray<FVector> Positions;
+	for (const FPredictProjectilePathPointData& Pos : TraceResult.PathData)
+	{
+		Positions.Add(Pos.Location);
+	}
+	UNiagaraDataInterfaceArrayFunctionLibrary::SetNiagaraArrayVector(TraceComp, "RibbonPositions", Positions);
 }
 
 FHitResult UVMotionControllerComponent::StopGetTracingResult() const
