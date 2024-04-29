@@ -18,6 +18,7 @@ public:
 	void StartTracing();
 	void DoTracing();
 	FHitResult StopGetTracingResult() const;
+	virtual void BeginPlay() override;
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Trace")
 	float TraceProjectileLaunchVelocity = 500.f;
@@ -26,4 +27,10 @@ private:
 	float TraceProjectileRadius = 30.f;
 
 	FPredictProjectilePathResult TraceResult;
+
+	UPROPERTY()
+	class UNiagaraComponent* TraceComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "VFX")
+	class UNiagaraSystem* TraceSystemAsset;
 };

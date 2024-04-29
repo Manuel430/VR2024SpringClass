@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
-
-
 #include "VMotionControllerComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraSystem.h"
+#include "NiagaraComponent.h"
 #include "NavigationSystem.h"
 
 void UVMotionControllerComponent::StartTracing()
@@ -40,4 +40,14 @@ void UVMotionControllerComponent::DoTracing()
 FHitResult UVMotionControllerComponent::StopGetTracingResult() const
 {
 	return TraceResult.HitResult;
+}
+
+void UVMotionControllerComponent::BeginPlay()
+{
+	Super::BeginPlay();
+	TraceComp = NewObject<UNiagaraComponent>(GetOwner(), NAME_None);
+	TraceComp->SetAsset(TraceSystemAsset);
+	TraceComp->SetupAttachment(this);
+	TraceComp->RegisterComponent();
+	//TraceComp->SetHiddenInGame(true);
 }
